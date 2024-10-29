@@ -1,0 +1,7 @@
+# Ignore the virtual environment folder
+myenv/
+venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
