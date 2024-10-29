@@ -61,22 +61,26 @@ def product_detail_api(request,id):
 #     return Response(serializer.data, status=status.HTTP_200_OK)
 
 # View to update product details
-@api_view(['PUT'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def product_update_api(request, id):
     try:
         product = Product_Category.objects.get(pk=id)
     except Product_Category.DoesNotExist:
         return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
-
-    serializer = ProductSerializer(product, data=request.data, partial=True)
     
-    if serializer.is_valid():
-        serializer.save()
-        return Response({"message": "Product updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
-    else:
-        return Response({"error": "Failed to update the product!", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'GET':
+        serializer = ProductSerializer(product)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
+    elif request.method == 'PUT':
+        serializer = ProductSerializer(product, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Product updated successfully!", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Failed to update the product!", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def product_delete_api(request,id):
