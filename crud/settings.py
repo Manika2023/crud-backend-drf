@@ -152,10 +152,37 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # React dev server
+#     "http://localhost:5173",
+
+# ]
+# CORS CONFIGURATION
+CORS_ALLOW_ALL_ORIGINS = False  # Set to False to avoid conflicts
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
-    "http://localhost:5173",
+    "http://localhost:5173",  # Vite dev server (if applicable)
+    "https://inventory-drf-react-onz2oxzvr-manikas-projects-014d120d.vercel.app",  # ✅ Add your deployed frontend URL
+]
 
+CORS_ALLOW_CREDENTIALS = True  # Allow cookies, authentication headers
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "x-csrftoken",
+]
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://inventory-drf-react-onz2oxzvr-manikas-projects-014d120d.vercel.app",  # ✅ Trusted CSRF origin
 ]
